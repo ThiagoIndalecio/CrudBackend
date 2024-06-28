@@ -1,6 +1,7 @@
 const pool = require('../database/db_connection.jsx')
 
 const findUserByEmail = async (email) => {
+    console.log(email)
     const dados = await pool.query("SELECT * FROM USERS WHERE EMAIL = $1", [email]);
     return dados.rows[0];
 };
@@ -16,7 +17,7 @@ const result = await pool.query(
 };
 
 const listUsers = async () =>{
-    const users = await pool.query("SELECT * FROM USERS WHERE STATUS = TRUE")
+    const users = await pool.query("SELECT * FROM USERS")
     return users
 }
 
@@ -38,10 +39,19 @@ const updateUser = async (id, name,email,password,admin,status)=>{
 
 }
 
+const deleteRegisterModel = async(id) =>{
+    const result = await pool.query(
+        'DELETE FROM USERS WHERE ID = $1',[id ]
+    )
+    return (result.command)
+}
+
+
 module.exports = {
     findUserByEmail,
     createUser,
     listUsers,
     deleteUserById,
-    updateUser
+    updateUser,
+    deleteRegisterModel
 }

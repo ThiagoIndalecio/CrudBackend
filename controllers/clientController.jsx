@@ -1,4 +1,4 @@
-const { findClientByCpf, createClient, updateClient, findClientByCpforEmail, deleteClient, listClients } = require('../models/clientModel.jsx');
+const { deleteRegisterModel,findClientByCpf, createClient, updateClient, findClientByCpforEmail, deleteClient, listClients } = require('../models/clientModel.jsx');
 
 const register = async (req, res) => {
     const { name, email, phone, cpf } = req.body;
@@ -30,8 +30,13 @@ const register = async (req, res) => {
 
 
 const alterar = async (req,res) => {
-    const { name,email,phone,cpf,status,id } = req.body;
-    console.log(req.body)
+    const name = req.body.name
+    const email = req.body.email
+    const phone = req.body.phone
+    const status = req.body.status
+    const cpf = req.body.cpf
+    const id = req.body.id
+   
     try {
 
         const userExist = await findClientByCpf(cpf);
@@ -65,7 +70,7 @@ const buscar = async (req,res) =>{
     const client = await findClientByCpforEmail(info)
    
         if(client){
-            return res.json({message: 'Cleinte Encontrado', client})       
+            return res.json({message: 'Cliente Encontrado', client})       
         }else{
             return res.json({message:'Cliente Não Encontrado'})
         }     
@@ -99,14 +104,22 @@ const list = async (req, res) => {
 };
 
 
-
-
-
+const deleteRegister = async(req,res) =>{
+    const id = req.body.id
+    try{
+        const result = await deleteRegisterModel(id)
+        return res.json({message:'Usuario deletado' });
+    } catch{
+        return res.status(500).json({ message: 'Erro interno do servidor' });
+    }
+    
+}
 
 module.exports = {
     register,
     alterar,
     buscar,
     deleteClientById,
-    list
+    list,
+    deleteRegister
 };

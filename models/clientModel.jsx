@@ -37,9 +37,20 @@ const deleteClient = async (id) =>{
 }
 
 const listClients = async () =>{
-    const clients = await pool.query("SELECT * FROM CLIENTS WHERE CLI_STATUS = TRUE")
+    const clients = await pool.query("SELECT * FROM CLIENTS")
     return clients
 }
+
+const deleteRegisterModel = async(id) =>{
+    const result = await pool.query(
+        'DELETE FROM CLIENTS WHERE ID = $1',[id ]
+    )
+    return (result.command)
+}
+
+
+
+
 
 module.exports = {
     findClientByCpf,
@@ -47,5 +58,6 @@ module.exports = {
     updateClient,
     findClientByCpforEmail,
     deleteClient,
-    listClients
+    listClients,
+    deleteRegisterModel
 }

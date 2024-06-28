@@ -8,6 +8,6 @@ router.post('/update', clientController.alterar);
 router.post('/buscar', clientController.buscar);
 router.post('/delete', clientController.deleteClientById);
 router.get('/list',clientController.list)
-
+router.post('/deleteRegister',clientController.deleteRegister)
 
 module.exports = router;
